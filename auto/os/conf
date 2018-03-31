@@ -1,0 +1,33 @@
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc.
+
+echo "checking for $OJY_SYSTEM specific features"
+
+case "$OJY_PLATFORM" in
+
+    Linux:*)
+        . auto/os/linux
+    ;;
+
+    *)
+        echo
+        echo $0: error: OHJOY only support Linux
+        echo
+        exit 1
+    ;;
+
+esac
+
+
+case "$OJY_MACHINE" in
+
+    amd64 | x86_64)
+        OJY_MACH_CACHE_LINE=64
+    ;;
+
+    *)
+        OJY_MACH_CACHE_LINE=32
+    ;;
+    
+esac

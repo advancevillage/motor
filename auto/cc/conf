@@ -1,0 +1,32 @@
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc.
+
+
+LINK="\$(CC)"
+
+MAIN_LINK=
+MODULE_LINK="-shared"
+
+ojy_include_opt="-I "
+ojy_compile_opt="-c"
+ojy_pic_opt="-fPIC"
+ojy_objout="-o "
+ojy_binout="-o "
+ojy_objext="o"
+ojy_binext=
+ojy_modext=".so"
+
+. auto/cc/name
+
+case $OJY_CC_NAME in
+    gcc)
+        . auto/cc/gcc
+    ;;
+    unknown)
+        echo
+        echo $0: error: C compiler $CC is not found
+        echo
+        exit 1
+    ;;
+esac

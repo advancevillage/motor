@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc.
+
+export LC_ALL=C
+
+. auto/options
+. auto/init
+. auto/sources
+
+test -d $OJY_OBJS || mkdir -p $OJY_OBJS
+
+echo > $OJY_AUTO_HEADERS_H
+
+if test -z "$OJY_PLATFORM"; then
+    echo "checking for OS"
+
+    OJY_SYSTEM=`uname -s 2>/dev/null`
+    OJY_RELEASE=`uname -r 2>/dev/null`
+    OJY_MACHINE=`uname -m 2>/dev/null`
+
+    echo " + $OJY_SYSTEM $OJY_RELEASE $OJY_MACHINE"
+
+    OJY_PLATFORM="$OJY_SYSTEM:$OJY_RELEASE:$OJY_MACHINE";
+
+else
+    echo "building for $OJY_PLATFORM"
+    OJY_SYSTEM=$OJY_PLATFORM
+fi
+
+. auto/cc/conf
+
+
+. auto/os/conf

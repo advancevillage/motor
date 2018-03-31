@@ -1,0 +1,20 @@
+
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc.
+
+CORE_INCS="src/core"
+
+CORE_DEPS="src/core/ohjoy.h"
+
+CORE_SRCS="src/core/ohjoy.c"
+
+
+UNIX_INCS="$CORE_INCS src/os/unix"
+
+UNIX_DEPS="$CORE_INCS \
+            src/os/unix/ojy_alloc.h"
+            
+
+UNIX_SRCS="$CORE_SRCS \
+            src/os/unix/ojy_alloc.c"

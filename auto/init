@@ -1,0 +1,21 @@
+
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc.
+
+OJY_MAKEFILE=$OJY_OBJS/Makefile
+
+OJY_AUTO_HEADERS_H=$OJY_OBJS/ojy_auto_headers.h
+OJY_AUTO_CONFIG_H=$OJY_OBJS/ojy_auto_config.h
+
+
+
+#create Makefile
+
+cat << EOF > Makefile
+
+default: build
+
+clean:
+	rm -rf Makefile $OJY_OBJS
+EOF
