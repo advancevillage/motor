@@ -5,16 +5,18 @@
 
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/ohjoy.h"
+CORE_DEPS="src/core/ohjoy.h \
+           src/core/ojy_config.h"
 
-CORE_SRCS="src/core/ohjoy.c"
+CORE_SRCS="src/core/ohjoy.c \
+           src/core/ojy_config.c"
 
 
-UNIX_INCS="$CORE_INCS src/os/unix"
-
-UNIX_DEPS="$CORE_INCS \
-            src/os/unix/ojy_alloc.h"
-            
-
-UNIX_SRCS="$CORE_SRCS \
-            src/os/unix/ojy_alloc.c"
+##UNIX_INCS="$CORE_INCS src/os/unix"
+##
+##UNIX_DEPS="$CORE_INCS \
+##            src/os/unix/ojy_alloc.h"
+##            
+##
+##UNIX_SRCS="$CORE_SRCS \
+##            src/os/unix/ojy_alloc.c"

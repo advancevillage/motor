@@ -1,3 +1,5 @@
 # Copyright (C) Richard Sun
 # Copyright (C) Ohjoy, Inc.
 
+have=OJY_LINUX . auto/have
+

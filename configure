@@ -33,3 +33,7 @@ fi
 
 
 . auto/os/conf
+
+. auto/make
+
+. auto/install

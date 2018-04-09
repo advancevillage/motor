@@ -1,0 +1,10 @@
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc
+
+
+cat << END  >> $OJY_MAKEFILE
+
+install: build
+    echo "to do"
+END

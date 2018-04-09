@@ -19,15 +19,3 @@ case "$OJY_PLATFORM" in
 
 esac
 
-
-case "$OJY_MACHINE" in
-
-    amd64 | x86_64)
-        OJY_MACH_CACHE_LINE=64
-    ;;
-
-    *)
-        OJY_MACH_CACHE_LINE=32
-    ;;
-    
-esac

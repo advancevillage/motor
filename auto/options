@@ -3,15 +3,10 @@
 # Copyright (C) Richard Sun
 # Copyright (C) Ohjoy, Inc.
 
-help=no
-
-
 OJY_PREFIX=
 OJY_SBIN_PATH=
 OJY_CONF_PATH=
 OJY_PID_PATH=
-OJY_LOCK_PATH=
-OJY_MODULES_PATH=
 
 
 
@@ -21,11 +16,7 @@ OJY_OBJS=objs
 
 
 OJY_SBIN_PATH=${OJY_SBIN_PATH:-sbin/nginx}
-OJY_MODULES_PATH=${OJY_MODULES_PATH:-modules}
 OJY_CONF_PATH=${OJY_CONF_PATH:-conf/ohjoy.conf}
 OJY_PID_PATH=${OJY_PID_PATH:-logs/ohjoy.pid}
-OJY_LOCK_PATH=${oJY_LOCK_PATH:-logs/ohjoy.lock}
 
-
-OJY_PLATFORM=
 

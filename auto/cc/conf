@@ -5,9 +5,6 @@
 
 LINK="\$(CC)"
 
-MAIN_LINK=
-MODULE_LINK="-shared"
-
 ojy_include_opt="-I "
 ojy_compile_opt="-c"
 ojy_pic_opt="-fPIC"
@@ -16,6 +13,25 @@ ojy_binout="-o "
 ojy_objext="o"
 ojy_binext=
 ojy_modext=".so"
+
+ojy_long_start=
+ojy_long_end=
+
+ojy_regex_dirsep="\/"
+ojy_dirsep='/'
+
+ojy_regex_cont=' \\\
+    '
+ojy_cont=' \
+    '
+ojy_tab=' \
+        '
+
+ojy_spacer='
+'
+
+ojy_long_regex_cont=$ojy_regex_cont
+ojy_long_cont=$ojy_cont
 
 . auto/cc/name
 

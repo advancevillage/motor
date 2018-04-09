@@ -1,0 +1,92 @@
+
+# Copyright (C) Richard Sun
+# Copyright (C) Ohjoy, Inc
+
+echo "creating $OJY_MAKEFILE"
+
+mkdir -p $OJY_OBJS/src/core
+
+ojy_objs_dir=$OJY_OBJS$ojy_regex_dirsep
+
+cat << END > $OJY_MAKEFILE
+
+CC = $CC
+CFLAGS = $CFLAGS
+CPP = $CPP
+LINK = $LINK
+
+END
+
+ojy_incs=`echo $CORE_INCS $OJY_OBJS\
+    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont$ojy_include_opt\1/g" \
+           -e "s/\//$ojy_regex_dirsep/g"`
+
+cat << END  >> $OJY_MAKEFILE
+
+ALL_INCS = $ojy_include_opt$ojy_incs
+
+END
+
+ojy_all_srcs="$CORE_SRCS"
+
+set -x
+ojy_deps=`echo $CORE_DEPS \
+    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont\1/g" \
+           -e "s/\//$ojy_regex_dirsep/g"`
+
+ojy_incs=`echo $CORE_INCS $OJY_OBJS\
+    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont$ojy_include_opt\1/g" \
+           -e "s/\//$ojy_regex_dirsep/g"`
+set +x
+cat << END >> $OJY_MAKEFILE
+
+CORE_DEPS = $ojy_deps
+
+CORE_INCS = $ojy_include_opt$ojy_incs
+
+END
+
+ojy_all_srcs=`echo $ojy_all_srcs | sed -e "s/\//$ojy_regex_dirsep/g"`
+
+ojy_all_objs=`echo $ojy_all_srcs \
+    |   sed -e "s#\([^ ]*\.\)cpp#$OJY_OBJS\/\1$ojy_objext#g" \
+            -e "s#\([^ ]*\.\)cc#$OJY_OBJS\/\1$ojy_objext#g" \
+            -e "s#\([^ ]*\.\)c#$OJY_OBJS\/\1$ojy_objext#g" \
+            -e "s#\([^ ]*\.\)S#$OJY_OBJS\/\1$ojy_objext#g"`
+
+ojy_deps=`echo $ojy_all_objs \
+    |   sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont\1/g" \
+            -e "s/\//$ojy_regex_dirsep/g"`
+
+ojy_objs=`echo $ojy_all_objs \
+    |   sed -e "s/  *\([^ ][^ ]\)/$ojy_long_regex_cont\1/g" \
+            -e "s/\//$ojy_regex_dirsep/g"`
+
+cat << END >> $OJY_MAKEFILE
+
+build: binary 
+
+binary: $OJY_OBJS${ojy_dirsep}ohjoy$ojy_binext
+
+$OJY_OBJS${ojy_dirsep}ohjoy$ojy_binext: $ojy_deps$ojy_spacer
+    \$(LINK) $ojy_long_start$ojy_binout$OJY_OBJS${ojy_dirsep}ohjoy$ojy_long_cont$ojy_objs
+$ojy_long_end
+
+END
+
+ojy_cc="\$(CC) \$(CFLAGS) \$(CORE_INCS)"
+
+for ojy_src in $CORE_SRCS; do
+    ojy_src=`echo $ojy_src | sed -e "s/\//$ojy_regex_dirsep/g"`
+    ojy_obj=`echo $ojy_src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#$ojy_objs_dir\1$ojy_objext#g" \
+                -e "s#^\(.*\.\)cc\\$#$ojy_objs_dir\1$ojy_binext#g" \
+                -e "s#^\(.*\.\)c\\$#$ojy_objs_dir\1$ojy_objext#g" \
+                -e "s#^\(.*\.\)S\\$#$ojy_objs_dir\1$ojy_objext#g"`
+
+    cat << END >> $OJY_MAKEFILE
+$ojy_obj:  \$(CORE_DEPS)$ojy_cont$ojy_src
+    $ojy_cc$ojy_tab$ojy_objout$ojy_obj$ojy_tab$ojy_src
+
+END
+done

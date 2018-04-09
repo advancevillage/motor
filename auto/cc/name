@@ -6,8 +6,6 @@
 if `$CC -v 2>&1 | grep 'gcc version' >/dev/null 2>&1`; then
     OJY_CC_NAME=gcc
     echo " + using GNU C compiler"
-    
 else
     OJY_CC_NAME=unknown
-
 fi
