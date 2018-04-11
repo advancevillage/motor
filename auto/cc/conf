@@ -27,8 +27,8 @@ ojy_cont=' \
 ojy_tab=' \
         '
 
-ojy_spacer='
-'
+ojy_spacer=
+
 
 ojy_long_regex_cont=$ojy_regex_cont
 ojy_long_cont=$ojy_cont

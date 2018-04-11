@@ -8,3 +8,10 @@ cat << END  >> $OJY_MAKEFILE
 install: build
     echo "to do"
 END
+
+cat << END >> Makefile
+
+build:
+    \$(MAKE) -f $OJY_MAKEFILE
+
+END

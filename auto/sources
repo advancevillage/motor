@@ -5,11 +5,9 @@
 
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/ohjoy.h \
-           src/core/ojy_config.h"
+CORE_DEPS="src/core/ohjoy.h" 
 
-CORE_SRCS="src/core/ohjoy.c \
-           src/core/ojy_config.c"
+CORE_SRCS="src/core/ohjoy.c" 
 
 
 ##UNIX_INCS="$CORE_INCS src/os/unix"

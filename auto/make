@@ -74,7 +74,7 @@ $ojy_long_end
 
 END
 
-ojy_cc="\$(CC) \$(CFLAGS) \$(CORE_INCS)"
+ojy_cc="\$(CC) $ojy_compile_opt \$(CFLAGS) \$(CORE_INCS)"
 
 for ojy_src in $CORE_SRCS; do
     ojy_src=`echo $ojy_src | sed -e "s/\//$ojy_regex_dirsep/g"`

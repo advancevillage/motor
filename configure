@@ -37,3 +37,5 @@ fi
 . auto/make
 
 . auto/install
+
+sed -i "s/^    /\t/g" Makefile $OJY_MAKEFILE
