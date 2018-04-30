@@ -1,22 +1,22 @@
 
-
 # Copyright (C) Richard Sun
-# Copyright (C) Ohjoy, Inc.
 
-OJY_PREFIX=
-OJY_SBIN_PATH=
-OJY_CONF_PATH=
-OJY_PID_PATH=
+MTR_PREFIX=
+MTR_SBIN_PATH=
+MTR_CONF_PATH=
+MTR_PID_PATH=
+MTR_PLATFORM=
 
 
 
 CC=${CC:-cc}
 CPP=
-OJY_OBJS=objs
+MTR_OBJS=objs
 
 
-OJY_SBIN_PATH=${OJY_SBIN_PATH:-sbin/nginx}
-OJY_CONF_PATH=${OJY_CONF_PATH:-conf/ohjoy.conf}
-OJY_PID_PATH=${OJY_PID_PATH:-logs/ohjoy.pid}
+
+MTR_SBIN_PATH=${MTR_SBIN_PATH:-sbin/nginx}
+MTR_CONF_PATH=${MTR_CONF_PATH:-conf/ohjoy.conf}
+MTR_PID_PATH=${MTR_PID_PATH:-logs/ohjoy.pid}
 
 

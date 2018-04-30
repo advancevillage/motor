@@ -1,41 +1,19 @@
 
 # Copyright (C) Richard Sun
-# Copyright (C) Ohjoy, Inc.
 
 
 LINK="\$(CC)"
 
-ojy_include_opt="-I "
-ojy_compile_opt="-c"
-ojy_pic_opt="-fPIC"
-ojy_objout="-o "
-ojy_binout="-o "
-ojy_objext="o"
-ojy_binext=
-ojy_modext=".so"
-
-ojy_long_start=
-ojy_long_end=
-
-ojy_regex_dirsep="\/"
-ojy_dirsep='/'
-
-ojy_regex_cont=' \\\
-    '
-ojy_cont=' \
-    '
-ojy_tab=' \
-        '
-
-ojy_spacer=
-
-
-ojy_long_regex_cont=$ojy_regex_cont
-ojy_long_cont=$ojy_cont
+MTR_INCLUDE_OPT="-I "
+MTR_COMPILE_OPT="-c "
+MTR_OBJOUT="-o "
+MTR_BINOUT="-o "
+MTR_OBJEXT="o"
+MTR_BINEXT=""
 
 . auto/cc/name
 
-case $OJY_CC_NAME in
+case $MTR_CC_NAME in
     gcc)
         . auto/cc/gcc
     ;;

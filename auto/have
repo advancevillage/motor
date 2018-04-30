@@ -2,9 +2,9 @@
 # Copyright (C) Richard Sun
 # Copyright (C) Ohjoy, Inc
 
-cat << EOF >> $OJY_AUTO_HEADERS_H
+cat << EOF >> $MTR_AUTO_HEADERS_H
 
 #ifndef $have
-#define $have 1
+#define $have	1
 #endif
 EOF

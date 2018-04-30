@@ -1,14 +1,14 @@
 
 # Copyright (C) Richard Sun
-# Copyright (C) Ohjoy, Inc
 
-echo "creating $OJY_MAKEFILE"
+echo "creating $MTR_MAKEFILE"
 
-mkdir -p $OJY_OBJS/src/core
+mkdir -p $MTR_OBJS/src/core \
+		$MTR_OBJS/src/os/unix
 
-ojy_objs_dir=$OJY_OBJS$ojy_regex_dirsep
+mtr_objs_dir=$MTR_OBJS$MTR_REGEX_DIRESEP
 
-cat << END > $OJY_MAKEFILE
+cat << END > $MTR_MAKEFILE
 
 CC = $CC
 CFLAGS = $CFLAGS
@@ -17,76 +17,86 @@ LINK = $LINK
 
 END
 
-ojy_incs=`echo $CORE_INCS $OJY_OBJS\
-    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont$ojy_include_opt\1/g" \
-           -e "s/\//$ojy_regex_dirsep/g"`
+#all module
+mtr_all_incs=`echo $CORE_INCS $UNIX_INCS $MTR_OBJS\
+    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
 
-cat << END  >> $OJY_MAKEFILE
+cat << END  >> $MTR_MAKEFILE
 
-ALL_INCS = $ojy_include_opt$ojy_incs
-
-END
-
-ojy_all_srcs="$CORE_SRCS"
-
-set -x
-ojy_deps=`echo $CORE_DEPS \
-    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont\1/g" \
-           -e "s/\//$ojy_regex_dirsep/g"`
-
-ojy_incs=`echo $CORE_INCS $OJY_OBJS\
-    |  sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont$ojy_include_opt\1/g" \
-           -e "s/\//$ojy_regex_dirsep/g"`
-set +x
-cat << END >> $OJY_MAKEFILE
-
-CORE_DEPS = $ojy_deps
-
-CORE_INCS = $ojy_include_opt$ojy_incs
+ALL_INCS = ${MTR_INCLUDE_OPT}$mtr_all_incs
 
 END
 
-ojy_all_srcs=`echo $ojy_all_srcs | sed -e "s/\//$ojy_regex_dirsep/g"`
+#core module
+mtr_core_deps=`echo $CORE_DEPS \
+    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
 
-ojy_all_objs=`echo $ojy_all_srcs \
-    |   sed -e "s#\([^ ]*\.\)cpp#$OJY_OBJS\/\1$ojy_objext#g" \
-            -e "s#\([^ ]*\.\)cc#$OJY_OBJS\/\1$ojy_objext#g" \
-            -e "s#\([^ ]*\.\)c#$OJY_OBJS\/\1$ojy_objext#g" \
-            -e "s#\([^ ]*\.\)S#$OJY_OBJS\/\1$ojy_objext#g"`
+mtr_core_incs=`echo $CORE_INCS $MTR_OBJS \
+    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
 
-ojy_deps=`echo $ojy_all_objs \
-    |   sed -e "s/  *\([^ ][^ ]*\)/$ojy_regex_cont\1/g" \
-            -e "s/\//$ojy_regex_dirsep/g"`
+cat << END >> $MTR_MAKEFILE
 
-ojy_objs=`echo $ojy_all_objs \
-    |   sed -e "s/  *\([^ ][^ ]\)/$ojy_long_regex_cont\1/g" \
-            -e "s/\//$ojy_regex_dirsep/g"`
+CORE_DEPS = $mtr_core_deps
 
-cat << END >> $OJY_MAKEFILE
+CORE_INCS = ${MTR_INCLUDE_OPT}$mtr_core_incs
+
+END
+
+
+mtr_all_srcs="$CORE_SRCS  $UNIX_SRCS"
+mtr_all_srcs=`echo $mtr_all_srcs | sed -e "s/\//$MTR_REGEX_DIRESEP/g"`
+
+mtr_all_objs=`echo $mtr_all_srcs \
+    |   sed -e "s#\([^ ]*\.\)cpp#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
+            -e "s#\([^ ]*\.\)cc#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
+            -e "s#\([^ ]*\.\)c#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
+            -e "s#\([^ ]*\.\)S#$MTR_OBJS\/\1$MTR_OBJEXT#g"`
+
+mtr_all_deps=`echo $mtr_all_objs \
+    |   sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
+
+mtr_all_objs=`echo $mtr_all_objs \
+    |   sed -e "s/  *\([^ ][^ ]\)/${MTR_SED_NEWLINE}\1/g"`
+
+cat << END >> $MTR_MAKEFILE
 
 build: binary 
 
-binary: $OJY_OBJS${ojy_dirsep}ohjoy$ojy_binext
+binary: $MTR_OBJS${MTR_DIRSEP}motor${MTR_BINEXT}
 
-$OJY_OBJS${ojy_dirsep}ohjoy$ojy_binext: $ojy_deps$ojy_spacer
-    \$(LINK) $ojy_long_start$ojy_binout$OJY_OBJS${ojy_dirsep}ohjoy$ojy_long_cont$ojy_objs
-$ojy_long_end
+$MTR_OBJS${MTR_DIRSEP}motro${MTR_BINEXT}: $mtr_all_deps${MTR_SPACE_NEWLINE}
+${MTR_TAB}\$(LINK) ${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}motor $mtr_all_objs
 
 END
 
-ojy_cc="\$(CC) $ojy_compile_opt \$(CFLAGS) \$(CORE_INCS)"
+mtr_cc="\$(CC) $MTR_COMPILE_OPT \$(CFLAGS) \$(CORE_INCS)"
 
-for ojy_src in $CORE_SRCS; do
-    ojy_src=`echo $ojy_src | sed -e "s/\//$ojy_regex_dirsep/g"`
-    ojy_obj=`echo $ojy_src \
-        |   sed -e "s#^\(.*\.\)cpp\\$#$ojy_objs_dir\1$ojy_objext#g" \
-                -e "s#^\(.*\.\)cc\\$#$ojy_objs_dir\1$ojy_binext#g" \
-                -e "s#^\(.*\.\)c\\$#$ojy_objs_dir\1$ojy_objext#g" \
-                -e "s#^\(.*\.\)S\\$#$ojy_objs_dir\1$ojy_objext#g"`
+for mtr_src in $CORE_SRCS; do
+	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 
+    mtr_obj=`echo $mtr_src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
+                -e "s#^\(.*\.\)cc\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
+                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
+                -e "s#^\(.*\.\)S\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
 
-    cat << END >> $OJY_MAKEFILE
-$ojy_obj:  \$(CORE_DEPS)$ojy_cont$ojy_src
-    $ojy_cc$ojy_tab$ojy_objout$ojy_obj$ojy_tab$ojy_src
+    cat << END >> $MTR_MAKEFILE
+$mtr_obj:  \$(CORE_DEPS)${MTR_SHELL_NEWLINE}$mtr_src
+${MTR_TAB}$mtr_cc${MTR_SPACE}${MTR_OBJOUT}$mtr_obj${MTR_SPACE}$mtr_src
+
+END
+done
+
+for mtr_src in $UNIX_SRCS; do
+	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 
+    mtr_obj=`echo $mtr_src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
+                -e "s#^\(.*\.\)cc\\$#$mtr_objs_dir\1$MTR_BINEXT#g" \
+                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
+                -e "s#^\(.*\.\)S\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
+
+    cat << END >> $MTR_MAKEFILE
+$mtr_obj:  \$(CORE_DEPS)${MTR_SHELL_NEWLINE}$mtr_src
+${MTR_TAB}$mtr_cc${MTR_SPACE}${MTR_OBJOUT}$mtr_obj${MTR_SPACE}$mtr_src
 
 END
 done
