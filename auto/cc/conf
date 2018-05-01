@@ -9,6 +9,7 @@ MTR_COMPILE_OPT="-c "
 MTR_OBJOUT="-o "
 MTR_BINOUT="-o "
 MTR_OBJEXT="o"
+MTR_INCEXT="h"
 MTR_BINEXT=""
 
 . auto/cc/name

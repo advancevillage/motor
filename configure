@@ -4,6 +4,8 @@ set -exu
 # Copyright (C) Richard Sun
 
 export LC_ALL=C
+export PROJECT=motor
+export VERSION=0.0.1
 
 . auto/options
 . auto/init
@@ -37,6 +39,6 @@ fi
 . auto/os/conf
 
 . auto/make
-##
-##. auto/install
-##
+
+. auto/install
+

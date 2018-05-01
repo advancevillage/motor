@@ -1,19 +1,10 @@
-#ifndef __OHJOY__H__
-#define __OHJOY__H__
 
-struct Student {
-    int id;
-};
-
-/*!
- *@author richard sun
- *@brief search Student info
- *@param id int
- *@param name char*
- *@return id of student
- *@retval int
- *
+/*
+ * Copyright (C) Richard Sun
  */
-extern int searchStudent(int id, char* name);
+#ifndef _MOTOR_H_INCLUDE_
+#define _MOTOR_H_INCLUDE_
+
+#define MOTOR_VERSION "0.0.1"
 
 #endif

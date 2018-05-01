@@ -3,3 +3,5 @@ Makefile
 objs/*
 
 html/*
+
+src/core/mtr_auto_headers.h

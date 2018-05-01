@@ -3,8 +3,7 @@
 
 echo "creating $MTR_MAKEFILE"
 
-mkdir -p $MTR_OBJS/src/core \
-		$MTR_OBJS/src/os/unix
+mkdir -p $MTR_OBJS/src/core
 
 mtr_objs_dir=$MTR_OBJS$MTR_REGEX_DIRESEP
 
@@ -17,16 +16,6 @@ LINK = $LINK
 
 END
 
-#all module
-mtr_all_incs=`echo $CORE_INCS $UNIX_INCS $MTR_OBJS\
-    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
-
-cat << END  >> $MTR_MAKEFILE
-
-ALL_INCS = ${MTR_INCLUDE_OPT}$mtr_all_incs
-
-END
-
 #core module
 mtr_core_deps=`echo $CORE_DEPS \
     |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
@@ -35,22 +24,18 @@ mtr_core_incs=`echo $CORE_INCS $MTR_OBJS \
     |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
 
 cat << END >> $MTR_MAKEFILE
-
 CORE_DEPS = $mtr_core_deps
 
 CORE_INCS = ${MTR_INCLUDE_OPT}$mtr_core_incs
 
 END
 
-
-mtr_all_srcs="$CORE_SRCS  $UNIX_SRCS"
+mtr_all_srcs="$CORE_SRCS"
 mtr_all_srcs=`echo $mtr_all_srcs | sed -e "s/\//$MTR_REGEX_DIRESEP/g"`
 
 mtr_all_objs=`echo $mtr_all_srcs \
     |   sed -e "s#\([^ ]*\.\)cpp#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
-            -e "s#\([^ ]*\.\)cc#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
-            -e "s#\([^ ]*\.\)c#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
-            -e "s#\([^ ]*\.\)S#$MTR_OBJS\/\1$MTR_OBJEXT#g"`
+            -e "s#\([^ ]*\.\)c#$MTR_OBJS\/\1$MTR_OBJEXT#g"` 
 
 mtr_all_deps=`echo $mtr_all_objs \
     |   sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
@@ -62,41 +47,28 @@ cat << END >> $MTR_MAKEFILE
 
 build: binary 
 
-binary: $MTR_OBJS${MTR_DIRSEP}motor${MTR_BINEXT}
+binary: $MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}
 
-$MTR_OBJS${MTR_DIRSEP}motro${MTR_BINEXT}: $mtr_all_deps${MTR_SPACE_NEWLINE}
-${MTR_TAB}\$(LINK) ${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}motor $mtr_all_objs
+$MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}: $mtr_all_deps
+${MTR_TAB}\$(LINK) ${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}${PROJECT} $mtr_all_objs
 
 END
 
 mtr_cc="\$(CC) $MTR_COMPILE_OPT \$(CFLAGS) \$(CORE_INCS)"
 
-for mtr_src in $CORE_SRCS; do
+for mtr_src in $mtr_all_srcs; do
 	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 
     mtr_obj=`echo $mtr_src \
         |   sed -e "s#^\(.*\.\)cpp\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)cc\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)S\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
+                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
+	mtr_inc=`echo $mtr_src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#\1$MTR_INCEXT#g" \
+                -e "s#^\(.*\.\)c\\$#\1$MTR_INCEXT#g"`
 
     cat << END >> $MTR_MAKEFILE
-$mtr_obj:  \$(CORE_DEPS)${MTR_SHELL_NEWLINE}$mtr_src
+$mtr_obj:  $mtr_inc${MTR_SPACE}$mtr_src
 ${MTR_TAB}$mtr_cc${MTR_SPACE}${MTR_OBJOUT}$mtr_obj${MTR_SPACE}$mtr_src
 
 END
 done
 
-for mtr_src in $UNIX_SRCS; do
-	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 
-    mtr_obj=`echo $mtr_src \
-        |   sed -e "s#^\(.*\.\)cpp\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)cc\\$#$mtr_objs_dir\1$MTR_BINEXT#g" \
-                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)S\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
-
-    cat << END >> $MTR_MAKEFILE
-$mtr_obj:  \$(CORE_DEPS)${MTR_SHELL_NEWLINE}$mtr_src
-${MTR_TAB}$mtr_cc${MTR_SPACE}${MTR_OBJOUT}$mtr_obj${MTR_SPACE}$mtr_src
-
-END
-done

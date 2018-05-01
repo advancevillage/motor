@@ -1,22 +1,11 @@
 
 # Copyright (C) Richard Sun
 
+#core module
 CORE_MODULES="mtr_core_module"
 
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/motor.h \
-           src/core/mtr_config.h \
-		   src/core/mtr_core.h" 
+CORE_DEPS="src/core/motor.h"
 
 CORE_SRCS="src/core/motor.c" 
-
-
-UNIX_INCS="src/os/unix"
-
-UNIX_DEPS="$CORE_INCS \
-            src/os/unix/mtr_alloc.h"
-            
-
-UNIX_SRCS="src/os/unix/mtr_linux_config.c \
-           src/os/unix/mtr_alloc.c"
