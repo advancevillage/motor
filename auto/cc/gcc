@@ -7,4 +7,4 @@ MTR_GCC_VER=`$CC -v 2>&1 | grep 'gcc version' 2>&1 \
 
 echo " + gcc version: $MTR_GCC_VER"
 
-CFLAGS="-O -g"
+CFLAGS="-O -g -fPIC"

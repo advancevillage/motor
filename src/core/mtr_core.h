@@ -9,4 +9,6 @@
 #define MTR_OK			 0
 #define MTR_ERROR		-1
 
+#include <mtr_string.h>
+
 #endif

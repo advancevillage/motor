@@ -6,6 +6,8 @@ CORE_MODULES="mtr_core_module"
 
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/motor.h"
+CORE_DEPS="src/core/motor.h \
+		   src/core/mtr_string.h" 
 
-CORE_SRCS="src/core/motor.c" 
+CORE_SRCS="src/core/motor.c \
+		   src/core/mtr_string.c"
