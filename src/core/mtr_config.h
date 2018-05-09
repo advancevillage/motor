@@ -13,6 +13,12 @@
 
 typedef intptr_t  mtr_int_t;  //!< <stdint.h> 
 typedef uintptr_t mtr_uint_t; 
+typedef int		  mtr_fd_t;
+typedef int		  mtr_err_t;
+
+#ifndef mtr_inline
+#define mtr_inline	inline
+#endif
 
 #define MTR_INT32_LEN  (sizeof("-2147483648") - 1) 
 #define MTR_INT64_LEN  (sizeof("-9223372036854775808") - 1) 
