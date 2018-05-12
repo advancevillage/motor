@@ -24,13 +24,12 @@
 typedef struct {
 	mtr_fd_t	fd;
 	mtr_str_t	name;
-	void       *data;
 } mtr_open_file_t;
 
 
 typedef struct {
 	mtr_uint_t			 log_level;
-	mtr_open_file_t		*file;
+	mtr_open_file_t		 file;
 	time_t				 disk_full_time;
 	void				*data;
 } mtr_log_t;

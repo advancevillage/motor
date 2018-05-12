@@ -1,8 +1,10 @@
-#motor 
-c/c++ web application server
+# motor
 
-##Develop
-*  VIM 7.4
-*  GCC 5.4
-*  G++ 5.4
-*  Doxygen 1.8.11
+    c/c++ web application server
+
+## Develop
+
+* VIM 7.4 && VS Code
+* GCC 5.
+* G++ 5.4
+* Doxygen 1.8.11
