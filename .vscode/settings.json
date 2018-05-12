@@ -1,0 +1,21 @@
+{
+    "editor.fontSize": 20,
+    "search.exclude": {
+        "someFolder/": true,
+        "somefile": true
+    },   
+    "files.exclude": {
+        "somefolder/": true,
+        "somefile": true
+    },
+    "explorer.openEditors.visible": 0,
+    "C_Cpp.default.cppStandard": "c++11",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.default.includePath": [
+        "/usr/include/",
+        "/usr/include/c++/5.4/",
+        "/home/richard/Project/motor/src/core/",
+        "/usr/include/x86_64-linux-gnu/"
+    ],
+}
