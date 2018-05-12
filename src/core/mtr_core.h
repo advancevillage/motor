@@ -10,5 +10,7 @@
 #define MTR_ERROR		-1
 
 #include <mtr_string.h>
+#include <mtr_log.h>
+#include <mtr_palloc.h>
 
 #endif

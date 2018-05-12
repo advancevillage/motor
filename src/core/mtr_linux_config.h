@@ -14,8 +14,6 @@
 #include <string.h>
 #include <time.h>
 
-typedef int		mtr_fd_t;
-
 #define MTR_PAGESIZE   (getpagesize())
 
 #endif
