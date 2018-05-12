@@ -21,6 +21,8 @@
 #define MTR_LOG_DEBUG_ALLOC		  0x020
 #define MTR_LOG_DEBUG_MUTEX		  0x040
 
+#define MTR_MAX_ERROR_STR		2048
+
 typedef struct {
 	mtr_fd_t	fd;
 	mtr_str_t	name;
@@ -31,7 +33,7 @@ typedef struct {
 	mtr_uint_t			 log_level;
 	mtr_open_file_t		 file;
 	time_t				 disk_full_time;
-	void				*data;
+	mtr_str_t			 data;
 } mtr_log_t;
 
 /*!

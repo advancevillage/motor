@@ -31,6 +31,7 @@ void mtr_strlow(u_char *dst, u_char *src, size_t n);
 #define mtr_strlen(s)		strlen((const char *) s)
 size_t mtr_strnlen(u_char *str, size_t n);
 
+#define mtr_cpymem(dst, src, n) ((u_char*)memcpy(dst, src, n) + (n))
 #define mtr_strcmp(s1, s2)	    strcmp((const char *) s1,(const char *) s2)
 #define mtr_strncmp(s1, s2, n)	strncmp((const char *) s1,(const char *) s2, n)
 #define mtr_strstr(s1, s2)		strstr((const char *) s1, (const char *) s2)
@@ -38,4 +39,5 @@ size_t mtr_strnlen(u_char *str, size_t n);
 #define mtr_memcmp(s1, s2, n)   memcmp((const char *) s1, (const char *) s2, n)
 #define mtr_memset(buf, c, n)   (void) memset(buf, c, n)
 #define mtr_memzero(buf, n)     (void) memset(buf, 0, n)
+
 #endif
