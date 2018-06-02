@@ -5,14 +5,16 @@
 #ifndef _MTR_LINUX_CONFIG_H_INCLUDE_
 #define _MTR_LINUX_CONFIG_H_INCLUDE_
 
-#include <sys/types.h>
-#include <sys/time.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+//C++ STD Header
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
+
+//POSIX Socket Header
+#include <error.h>
+#include <pthread.h>
+
 
 #define MTR_PAGESIZE   (getpagesize())
 
