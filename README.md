@@ -13,7 +13,7 @@
 ## 依赖库
 
 * sqdlog: sudo apt-get install -y libspdlog-dev  (1.6-1)
-  * https://github.com/gabime/spdlog
+  * https://github.com/gabime/spdlog [tag 0.17.0]
   * https://github.com/COMBINE-lab/spdlog
   * https://github.com/gabime/spdlog/wiki/1.-QuickStart
 
@@ -22,3 +22,8 @@
 * 命名空间格式 motor
 * 类命名格式  XxxProcessor
   * LogProcessor   日志处理器
+
+## g++ 编译选项
+
+* -std=c++11
+* -lpthread
