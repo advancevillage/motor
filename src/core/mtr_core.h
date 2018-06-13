@@ -9,6 +9,7 @@
 #define MTR_OK			 0
 #define MTR_ERROR		-1
 
+#include <spdlog/spdlog.h>
 #include <mtr_log.h>
 
 #endif

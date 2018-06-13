@@ -14,7 +14,8 @@
     "C_Cpp.clang_format_sortIncludes": true,
     "clang.executable": "clang",
     "C_Cpp.default.includePath": [
-        "${workspaceRoot}",
+        "/home/richard/Project/motor",
+        "/home/richard/Project/motor/src",
         "/usr/include/c++/5/",
         "/usr/include/x86_64-linux-gnu/",
         "/usr/include/x86_64-linux-gnu/sys/",

@@ -8,9 +8,21 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-// spdlog module
-#include <spdlog/spdlog.h>
+class LogProcessor{
+protected:
+    std::string file;
+    int         level;
 
+private:
+    auto        sink;
+    auto        loger;   
 
+public:
+    LogProcessor();
+    ~LogProcessor();
+
+public:
+    string GetLogFileName();
+};
 
 #endif

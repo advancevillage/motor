@@ -8,8 +8,6 @@
 //C++ STD Header
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <sstream>
 
 //POSIX Socket Header
 #include <error.h>
