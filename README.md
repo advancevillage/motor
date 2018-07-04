@@ -12,10 +12,17 @@
 
 ## 依赖库
 
-* sqdlog: sudo apt-get install -y libspdlog-dev  (1.6-1)
-  * https://github.com/gabime/spdlog [tag 0.17.0]
-  * https://github.com/COMBINE-lab/spdlog
-  * https://github.com/gabime/spdlog/wiki/1.-QuickStart
+* fmt 5.0
+  * http://fmtlib.net/latest/index.html
+  * https://github.com/fmtlib/fmt
+    * wget https://github.com/fmtlib/fmt/archive/5.0.0.tar.gz
+    * tar -zxf 5.0.0.tar.gz
+    * cd fmt-5.0.0
+    * mkdir build
+    * cd build
+    * cmake ..
+    * make
+    * sudo make install
 
 ## 命名规范
 
@@ -26,4 +33,4 @@
 ## g++ 编译选项
 
 * -std=c++11
-* -lpthread
+* -lfmt

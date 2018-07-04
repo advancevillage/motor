@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "enter program name, for example ${workspaceFolder}/a.out",
+            "program": "${workspaceFolder}/test/test",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -22,6 +22,25 @@
                     "ignoreFailures": true
                 }
             ]
+        }
+    ],
+    "tasks": [
+        {
+            "taskName": "build",  // 任务名
+            "suppressTaskName": true,
+            "args": ["-g", "-o", "${fileBasenameNoExtension}.out", "${file}"],  // 命令参数
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation":  ["relative", "${workspaceRoot}"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
         }
     ]
 }

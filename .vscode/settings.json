@@ -71,6 +71,12 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "codecvt": "c",
+        "condition_variable": "c",
+        "deque": "c",
+        "string_view": "c",
+        "numeric": "c",
+        "spdlog_impl.h": "c"
     }
 }
