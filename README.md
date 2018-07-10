@@ -13,16 +13,29 @@
 ## 依赖库
 
 * fmt 5.0
-  * http://fmtlib.net/latest/index.html
-  * https://github.com/fmtlib/fmt
-    * wget https://github.com/fmtlib/fmt/archive/5.0.0.tar.gz
-    * tar -zxf 5.0.0.tar.gz
-    * cd fmt-5.0.0
-    * mkdir build
-    * cd build
-    * cmake ..
-    * make
-    * sudo make install
+  * 地址
+    * http://fmtlib.net/latest/index.html & https://github.com/fmtlib/fmt
+      * wget https://github.com/fmtlib/fmt/archive/5.0.0.tar.gz
+      * tar -zxf 5.0.0.tar.gz
+      * cd fmt-5.0.0
+      * mkdir build
+      * cd build
+      * cmake -DBUILD_SHARED_LIBS=TRUE ..
+      * make
+      * sudo make install
+      * sudo ldconfig
+  * 包含
+    * #ifndef _MTR_USE_FMT_INCLUDE_H_
+    * #define _MTR_USE_FMT_INCLUDE_H_
+    * #include <fmt/core.h>
+    * #include <fmt/format.h>
+    * #include <fmt/posix.h>
+    * #include <fmt/time.h>
+    * #include <fmt/ranges.h>
+    * #include <fmt/printf.h>
+    * #include <fmt/ostream.h>
+    * #include <fmt/format-inl.h>
+    * #endif  
 
 ## 命名规范
 
