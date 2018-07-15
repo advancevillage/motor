@@ -2,9 +2,9 @@
 # Copyright (C) Richard Sun
 # Copyright (C) Ohjoy, Inc.
 
-MTR_GCC_VER=`$CC -v 2>&1 | grep 'gcc version' 2>&1 \
+MTR_GCC_VER=`$CPP -v 2>&1 | grep 'gcc version' 2>&1 \
                          | sed -e 's/^.* version \(.*\) /\1/'`
 
-echo " + gcc version: $MTR_GCC_VER"
+echo " + g++ version: $MTR_GCC_VER"
 
-CFLAGS="-O -g -fPIC"
+CFLAGS="-std=c++11 -O -g -fPIC"

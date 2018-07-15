@@ -11,7 +11,8 @@
 #include <mtr_linux_config.h>
 #endif
 
-// typedef intptr_t  mtr_int_t;  //!< <stdint.h> 
-// typedef uintptr_t mtr_uint_t; 
+typedef intptr_t        mtr_int_t;
+typedef uintptr_t       mtr_uint_t;
+
 
 #endif

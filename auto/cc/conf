@@ -2,7 +2,7 @@
 # Copyright (C) Richard Sun
 
 
-LINK="\$(CC)"
+LINK="\$(CPP)"
 
 MTR_INCLUDE_OPT="-I "
 MTR_COMPILE_OPT="-c "
@@ -14,13 +14,13 @@ MTR_BINEXT=""
 
 . auto/cc/name
 
-case $MTR_CC_NAME in
-    gcc)
-        . auto/cc/gcc
+case $MTR_CPP_NAME in
+    g++)
+        . auto/cc/g++
     ;;
     unknown)
         echo
-        echo $0: error: C compiler $CC is not found
+        echo $0: error: C compiler $CPP is not found
         echo
         exit 1
     ;;

@@ -7,13 +7,8 @@ MTR_CONF_PATH=
 MTR_PID_PATH=
 MTR_PLATFORM=
 
-
-
-CC=${CC:-cc}
-CPP=
+CPP=${CC:-c++}
 MTR_OBJS=objs
-
-
 
 MTR_SBIN_PATH=${MTR_SBIN_PATH:-sbin/nginx}
 MTR_CONF_PATH=${MTR_CONF_PATH:-conf/ohjoy.conf}

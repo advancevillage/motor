@@ -8,8 +8,10 @@
 //C++ STD Header
 #include <iostream>
 #include <string>
+#include <fstream>
 
 //POSIX Socket Header
+#include <unistd.h>
 #include <error.h>
 #include <pthread.h>
 

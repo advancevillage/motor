@@ -9,7 +9,6 @@ mtr_objs_dir=$MTR_OBJS$MTR_REGEX_DIRESEP
 
 cat << END > $MTR_MAKEFILE
 
-CC = $CC
 CFLAGS = $CFLAGS
 CPP = $CPP
 LINK = $LINK
@@ -54,7 +53,7 @@ ${MTR_TAB}\$(LINK) ${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}${PROJECT} $mtr_all_objs
 
 END
 
-mtr_cc="\$(CC) $MTR_COMPILE_OPT \$(CFLAGS) \$(CORE_INCS)"
+mtr_cc="\$(CPP) $MTR_COMPILE_OPT \$(CFLAGS) \$(CORE_INCS)"
 
 for mtr_src in $mtr_all_srcs; do
 	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 

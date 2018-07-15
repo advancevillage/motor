@@ -8,21 +8,25 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-class LogProcessor{
+class MtrLogPoolDataBlock {
+public:
+    u_char              *start;
+    u_char              *last;
+    u_char              *end;
+    MtrLogPoolDataBlock *next;
 protected:
-    std::string file;
-    int         level;
+    size_t              max;
+    std::string         errlog;
+    mtr_uint_t          failed;
+
+public:
+    explicit MtrLogPoolDataBlock();
+    explicit MtrLogPoolDataBlock(std::string _errlog);
+    explicit MtrLogPoolDataBlock(size_t _mem, std::string _errlog);
+    ~MtrLogPoolDataBlock(); 
 
 private:
-    auto        sink;
-    auto        loger;   
-
-public:
-    LogProcessor();
-    ~LogProcessor();
-
-public:
-    string GetLogFileName();
+    void Initialize(size_t _mem);
 };
 
 #endif
