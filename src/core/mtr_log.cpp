@@ -8,18 +8,25 @@
 MtrLogPoolDataBlock::MtrLogPoolDataBlock()
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog("log/error.log") 
 {
-    this->Initialize(MTR_PAGESIZE);
+    size_t pagesize = MTR_PAGESIZE;
+    this->Initialize(pagesize);
 }
 
 MtrLogPoolDataBlock::MtrLogPoolDataBlock(std::string _errlog)
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog(_errlog)
 {
-    this->Initialize(MTR_PAGESIZE);
+    size_t pagesize = MTR_PAGESIZE;
+    this->Initialize(pagesize);
 }
 
 MtrLogPoolDataBlock::MtrLogPoolDataBlock(size_t _mem, std::string _errlog)
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog(_errlog)
 {
+    if(_mem & (_mem -1)){
+        size_t temp = 1;
+        while(temp < _mem) temp <<= 1;
+        _mem = temp;
+    }
     this->Initialize(_mem);
 }
 
