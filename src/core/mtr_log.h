@@ -8,22 +8,22 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-class MtrLogPoolDataBlock {
+class MtrLogPoolClass {
 public:
     u_char              *start;
     u_char              *last;
     u_char              *end;
-    MtrLogPoolDataBlock *next;
+    MtrLogPoolClass     *next;
 protected:
     size_t              max;
     std::string         errlog;
     mtr_uint_t          failed;
 
 public:
-    explicit MtrLogPoolDataBlock();
-    explicit MtrLogPoolDataBlock(std::string _errlog);
-    explicit MtrLogPoolDataBlock(size_t _mem, std::string _errlog);
-    ~MtrLogPoolDataBlock(); 
+    explicit MtrLogPoolClass();
+    explicit MtrLogPoolClass(std::string _errlog);
+    explicit MtrLogPoolClass(size_t _mem, std::string _errlog);
+    ~MtrLogPoolClass(); 
 
 private:
     void Initialize(size_t _mem);

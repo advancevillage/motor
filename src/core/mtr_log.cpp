@@ -5,21 +5,21 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-MtrLogPoolDataBlock::MtrLogPoolDataBlock()
+MtrLogPoolClass::MtrLogPoolClass()
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog("log/error.log") 
 {
     size_t pagesize = MTR_PAGESIZE;
     this->Initialize(pagesize);
 }
 
-MtrLogPoolDataBlock::MtrLogPoolDataBlock(std::string _errlog)
+MtrLogPoolClass::MtrLogPoolClass(std::string _errlog)
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog(_errlog)
 {
     size_t pagesize = MTR_PAGESIZE;
     this->Initialize(pagesize);
 }
 
-MtrLogPoolDataBlock::MtrLogPoolDataBlock(size_t _mem, std::string _errlog)
+MtrLogPoolClass::MtrLogPoolClass(size_t _mem, std::string _errlog)
     :start(NULL),last(NULL),end(NULL),next(NULL),failed(0),max(0),errlog(_errlog)
 {
     if(_mem & (_mem -1)){
@@ -30,7 +30,7 @@ MtrLogPoolDataBlock::MtrLogPoolDataBlock(size_t _mem, std::string _errlog)
     this->Initialize(_mem);
 }
 
-void MtrLogPoolDataBlock::Initialize(size_t _mem){
+void MtrLogPoolClass::Initialize(size_t _mem){
     try{
         start = new u_char [_mem];
         last = start;
@@ -46,7 +46,7 @@ void MtrLogPoolDataBlock::Initialize(size_t _mem){
     }
 }
 
-MtrLogPoolDataBlock::~MtrLogPoolDataBlock(){
+MtrLogPoolClass::~MtrLogPoolClass(){
     delete [] start;
     start = NULL;
     end = NULL;
