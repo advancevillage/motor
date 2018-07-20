@@ -17,5 +17,6 @@
 #endif
 
 #include <mtr_log.h>
+#include <mtr_mem.h>
 
 #endif
