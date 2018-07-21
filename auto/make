@@ -49,7 +49,7 @@ build: binary
 binary: $MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}
 
 $MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}: $mtr_all_deps
-${MTR_TAB}\$(LINK) ${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}${PROJECT} $mtr_all_objs
+${MTR_TAB}\$(LINK) $mtr_all_objs${MTR_SHELL_NEWLINE}\$(CFLAGS)${MTR_SPACE}${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}${PROJECT} 
 
 END
 
@@ -66,7 +66,7 @@ for mtr_src in $mtr_all_srcs; do
 
     cat << END >> $MTR_MAKEFILE
 $mtr_obj:  $mtr_inc${MTR_SPACE}$mtr_src
-${MTR_TAB}$mtr_cc${MTR_SPACE}${MTR_OBJOUT}$mtr_obj${MTR_SPACE}$mtr_src
+${MTR_TAB}$mtr_cc${MTR_SPACE}$mtr_src${MTR_SPACE}${MTR_OBJOUT}$mtr_obj
 
 END
 done
