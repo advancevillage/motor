@@ -32,6 +32,19 @@ bool MtrBufferClass::MtrBufferIn(void *_src, size_t _size){
     return true;
 }
 
+bool MtrBufferClass::MtrBufferIn(const void *_src, size_t _size){
+    if((this->size - this->realsize) < _size ){
+        return false;
+    }
+    std::memcpy(this->last, _src, _size);
+    this->last = this->last + _size;
+    this->realsize += _size;
+    return true;
+}
+
 void MtrBufferClass::MtrBufferReset(){
     std::memset(this->start, 0, this->size);
+    this->pos  = this->start;
+    this->last = this->start;
+    this->realsize = 0;
 }

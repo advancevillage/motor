@@ -3,6 +3,18 @@
  */
 #include <mtr_config.h>
 #include <mtr_core.h>
+// partition of pool
+MtrPoolPartClass::MtrPoolPartClass(u_char *_start, u_char *_end, mtr_uint_t _status)
+    :start(_start),end(_end),status(_status),pre(NULL)
+{
+
+}
+MtrPoolPartClass::~MtrPoolPartClass(){
+    start  = NULL;
+    end    = NULL;
+    status = 0;
+    pre    = NULL;
+}
 // pool base class
 MtrPoolBaseClass::MtrPoolBaseClass(std::string _filedir, std::string _filename)
     :filedir(_filedir),filename(_filename),start(NULL),size(0),max(0),failed(0)
@@ -64,25 +76,41 @@ size_t MtrPoolBaseClass::GetFailed() const {
 
 // pool data
 MtrPoolDataClass::MtrPoolDataClass(std::string _filedir, std::string _filename)
-    :MtrPoolBaseClass(_filedir,_filename),last(NULL),end(NULL),next(NULL)
+    :MtrPoolBaseClass(_filedir,_filename),last(NULL),end(NULL),next(NULL),tail(NULL)
 {
     this->last = this->start;
     this->end = this->start + this->GetSize();
 }
 
 MtrPoolDataClass::MtrPoolDataClass(size_t _size, std::string _filedir, std::string _filename)
-    :MtrPoolBaseClass(_size,_filedir,_filename),last(NULL),end(NULL),next(NULL)
+    :MtrPoolBaseClass(_size,_filedir,_filename),last(NULL),end(NULL),next(NULL),tail(NULL)
 {
     this->last = this->start;
     this->end = this->start + this->GetSize();
 }
 
 MtrPoolDataClass::~MtrPoolDataClass(){
+    while(this->tail){
+        MtrPoolPartClass *p = this->tail;
+        this->tail = this->tail->pre;
+        delete p;
+    }
     last = NULL;
     end  = NULL;
     next = NULL;
 }
 
+void MtrPoolDataClass::MtrPoolDataRecycle(){
+    while(this->tail && this->tail->status == 0){
+        MtrPoolPartClass *p = this->tail;
+        this->tail = this->tail->pre;
+    }
+    if(this->tail){
+        this->last = this->tail->end;
+    }else{
+        this->last = this->start;
+    }
+}
 //pool
 MtrPoolClass::MtrPoolClass(LogProcessor *_log, size_t _max)
     :log(_log),small(NULL),large(NULL),smallen(0),largelen(0),max(_max)
@@ -122,8 +150,17 @@ u_char* MtrPoolClass::MtrAllocSmallPool(size_t _size){
         m = p->last;
         size_t free = p->GetFreeSize();
         if(free >= _size){
+            MtrPoolPartClass *poolpart = new MtrPoolPartClass();
+            poolpart->start = p->last;
             p->last = m + _size;
+            poolpart->end = p->last;
             p->SetFreeSize(free - _size);
+            if(NULL == p->tail){
+                p->tail = poolpart;
+            }else{
+                poolpart->pre = p->tail;
+                p->tail = poolpart;
+            }
             return m;
         }
         p = p->next;
@@ -136,9 +173,18 @@ u_char* MtrPoolClass::MtrAllocblock(size_t _size, size_t type){
     size_t  block = type ? _size : this->max;
     MtrPoolDataClass  *p = new MtrPoolDataClass(block, this->log->GetLogDir(),this->log->GetErrLogFileName());
     if(p->last) {
+        MtrPoolPartClass *poolpart = new MtrPoolPartClass();
+        poolpart->start = p->last;
         m = p->last;
         p->last = p->last + _size;
+        poolpart->end = p->last;
         p->SetFreeSize(p->GetFreeSize() - _size);
+        if(NULL == p->tail){
+            p->tail = poolpart;
+        }else{
+            poolpart->pre = p->tail;
+            p->tail = poolpart;
+        }
         MtrPoolDataClass    *q = type ? this->large : this->small;
         while(q->next) q = q->next;
         q->next = p;

@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <error.h>
 #include <pthread.h>
+#include <cstring>
 
 
 #define MTR_PAGESIZE   (getpagesize())

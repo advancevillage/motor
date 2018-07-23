@@ -7,7 +7,6 @@
 
 #include <mtr_config.h>
 #include <mtr_core.h>
-
 /**
  *@brief: memory pool base class
  */
@@ -60,21 +59,42 @@ public:
      */
     size_t GetFailed() const;
 };
+/**
+ *@brief: partition of pool
+ */
+class MtrPoolPartClass {
+public:
+    u_char  *start;
+    u_char  *end;
+    /**
+     *@brief: [0|1] 0: Recyclable 1: in-used
+     */
+    mtr_uint_t  status;
+    MtrPoolPartClass    *pre;
+public:
+    explicit MtrPoolPartClass(u_char *_start = NULL, u_char *_end = NULL, mtr_uint_t _status = 1);
+    ~MtrPoolPartClass();
 
-
+};
 /**
  *@brief: memory pool data
  */ 
 class MtrPoolDataClass : public MtrPoolBaseClass {
 public:
-    u_char  *last;
-    u_char  *end;
+    u_char              *last;
+    u_char              *end;
+    MtrPoolPartClass    *tail;
 public:
     MtrPoolDataClass    *next;
 public:
     explicit MtrPoolDataClass(std::string _filedir = "log/", std::string filename = "error.log");
     explicit MtrPoolDataClass(size_t _size, std::string _filedir = "log/", std::string filename = "error.log");
     ~MtrPoolDataClass();
+    /**
+     *@brief: recycle pool data memory
+     *@brief: reset and status == 0 before call
+     */
+    void MtrPoolDataRecycle();
 };
 
 /**

@@ -24,6 +24,7 @@ public:
     
 public:
     bool MtrBufferIn(void *_src, size_t _size);
+    bool MtrBufferIn(const void *_src, size_t _size);
     void MtrBufferReset();
 };
 #endif
