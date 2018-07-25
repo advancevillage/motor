@@ -190,7 +190,7 @@ void MtrPoolClass::MtrAllocSmallPool(MtrPoolAddressClass& pa, size_t _size){
         }
         p = p->next;
     }
-    this->MtrAllocblock(pa,_size,0);
+    if(!p) this->MtrAllocblock(pa,_size,0);
 }
 
 void MtrPoolClass::MtrAllocblock(MtrPoolAddressClass& pa, size_t _size, size_t type){
