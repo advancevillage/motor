@@ -11,7 +11,6 @@ class MtrBufferClass : public MtrContainerBaseClass {
 public:
     u_char      *pos;
     u_char      *last;
-    u_char      *end;
 
 protected:
     size_t      realsize;
