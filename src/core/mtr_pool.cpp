@@ -186,6 +186,7 @@ void MtrPoolClass::MtrAllocSmallPool(MtrPoolAddressClass& pa, size_t _size){
             }
             pa.pool = p;
             pa.addr = m;
+            break;
         }
         p = p->next;
     }
