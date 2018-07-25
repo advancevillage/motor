@@ -15,6 +15,7 @@ MtrPoolPartClass::~MtrPoolPartClass(){
     status = 0;
     pre    = NULL;
 }
+
 // pool base class
 MtrPoolBaseClass::MtrPoolBaseClass(std::string _filedir, std::string _filename)
     :filedir(_filedir),filename(_filename),start(NULL),size(0),max(0),failed(0)
@@ -111,6 +112,28 @@ void MtrPoolDataClass::MtrPoolDataRecycle(){
         this->last = this->start;
     }
 }
+//pool address
+MtrPoolAddressClass::MtrPoolAddressClass(MtrPoolDataClass *_pool, u_char *_addr)
+    :pool(_pool),addr(_addr)
+{
+
+}
+MtrPoolAddressClass::MtrPoolAddressClass(const MtrPoolAddressClass &_pooladdr){
+    this->pool = _pooladdr.pool;
+    this->addr = _pooladdr.addr;
+}
+MtrPoolAddressClass::MtrPoolAddressClass(MtrPoolAddressClass* &_pooladdr){
+    this->pool = _pooladdr->pool;
+    this->addr = _pooladdr->addr;
+}
+MtrPoolAddressClass::~MtrPoolAddressClass(){
+    this->pool = NULL;
+    this->addr = NULL;
+}
+void MtrPoolAddressClass::operator=(MtrPoolAddressClass &_pooladdr){
+    this->pool = _pooladdr.pool;
+    this->addr = _pooladdr.addr;
+}
 //pool
 MtrPoolClass::MtrPoolClass(LogProcessor *_log, size_t _max)
     :log(_log),small(NULL),large(NULL),smallen(0),largelen(0),max(_max)
@@ -136,14 +159,14 @@ MtrPoolClass::~MtrPoolClass(){
     largelen = 0;
 }
 
-u_char* MtrPoolClass::MtrAllocPool(size_t _size){
+void MtrPoolClass::MtrAllocPool(MtrPoolAddressClass& pa, size_t _size){
     if(this->max >= _size){
-        return this->MtrAllocSmallPool(_size);
+        return this->MtrAllocSmallPool(pa, _size);
     }
-    return this->MtrAllocLargePool(_size);
+    return this->MtrAllocLargePool(pa, _size);
 }
 
-u_char* MtrPoolClass::MtrAllocSmallPool(size_t _size){
+void MtrPoolClass::MtrAllocSmallPool(MtrPoolAddressClass& pa, size_t _size){
     u_char  *m = NULL;
     MtrPoolDataClass    *p = this->small;
     while(p && p->last){
@@ -161,14 +184,15 @@ u_char* MtrPoolClass::MtrAllocSmallPool(size_t _size){
                 poolpart->pre = p->tail;
                 p->tail = poolpart;
             }
-            return m;
+            pa.pool = p;
+            pa.addr = m;
         }
         p = p->next;
     }
-    return this->MtrAllocblock(_size,0);
+    this->MtrAllocblock(pa,_size,0);
 }
 
-u_char* MtrPoolClass::MtrAllocblock(size_t _size, size_t type){
+void MtrPoolClass::MtrAllocblock(MtrPoolAddressClass& pa, size_t _size, size_t type){
     u_char  *m = NULL;
     size_t  block = type ? _size : this->max;
     MtrPoolDataClass  *p = new MtrPoolDataClass(block, this->log->GetLogDir(),this->log->GetErrLogFileName());
@@ -190,11 +214,12 @@ u_char* MtrPoolClass::MtrAllocblock(size_t _size, size_t type){
         q->next = p;
         this->smallen = type ? this->smallen : (++this->smallen);
         this->largelen = type ? (++this->largelen) : this->largelen;
+        pa.pool = p;
+        pa.addr = m;
     }
-    return m;
 }
 
-u_char* MtrPoolClass::MtrAllocLargePool(size_t _size){
+void MtrPoolClass::MtrAllocLargePool(MtrPoolAddressClass& pa, size_t _size){
     u_char  *m = NULL;
     if(this->large == NULL){
         this->large = new MtrPoolDataClass(_size, this->log->GetLogDir(),this->log->GetErrLogFileName());
@@ -206,9 +231,10 @@ u_char* MtrPoolClass::MtrAllocLargePool(size_t _size){
         }else{
             this->large = NULL;
         }
-        return m;
+        pa.pool = this->large;
+        pa.addr = m;
     } else {
-        return this->MtrAllocblock(_size, 1);
+        this->MtrAllocblock(pa,_size, 1);
     }  
 }
 
@@ -222,4 +248,28 @@ size_t MtrPoolClass::GetSmallPoolListLength() const {
 
 size_t MtrPoolClass::GetLargePoolListLength() const {
     return this->largelen;
+}
+
+//container base class
+MtrContainerBaseClass::MtrContainerBaseClass(MtrPoolClass *pool, size_t _size)
+    :pa(),start(NULL),end(NULL),size(_size)
+{
+    pool->MtrAllocPool(this->pa, _size);
+    this->start = this->pa.addr;
+    this->end   = this->start + _size;
+}
+MtrContainerBaseClass::~MtrContainerBaseClass(){
+    MtrPoolPartClass *pp = this->pa.pool->tail;
+    while(pp){
+        if(pp->start == this->start){
+            pp->status = 0;
+            std::memset(this->start, 0, this->size);
+            this->pa.pool->MtrPoolDataRecycle();
+            break;
+        }
+        pp = pp->pre;
+    }
+    this->start = NULL;
+    this->end   = NULL;
+    this->size  = 0;
 }

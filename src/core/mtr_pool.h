@@ -74,7 +74,6 @@ public:
 public:
     explicit MtrPoolPartClass(u_char *_start = NULL, u_char *_end = NULL, mtr_uint_t _status = 1);
     ~MtrPoolPartClass();
-
 };
 /**
  *@brief: memory pool data
@@ -95,6 +94,23 @@ public:
      *@brief: reset and status == 0 before call
      */
     void MtrPoolDataRecycle();
+};
+/**
+ *@brief: return after allocated memory
+ */
+class MtrPoolAddressClass {
+public:
+    MtrPoolDataClass    *pool;
+    u_char              *addr;
+
+public:
+    explicit MtrPoolAddressClass(MtrPoolDataClass *_pool = NULL, u_char *_addr = NULL);
+    explicit MtrPoolAddressClass(const MtrPoolAddressClass& _pooladdr);
+    explicit MtrPoolAddressClass(MtrPoolAddressClass* &_pooladdr);
+    ~MtrPoolAddressClass();
+
+public:
+    void operator= (MtrPoolAddressClass &_pooladdr);
 };
 
 /**
@@ -119,7 +135,7 @@ public:
      *@brief: allocate memory 
      *@param: byte
      */
-    u_char* MtrAllocPool(size_t _size);
+    void MtrAllocPool(MtrPoolAddressClass& pa, size_t _size);
     /**
      *@brief: Get max size
      */
@@ -134,14 +150,27 @@ public:
     size_t GetLargePoolListLength() const;
 
 private:
-    u_char* MtrAllocSmallPool(size_t _size);
-    u_char* MtrAllocLargePool(size_t _size);
+    void MtrAllocSmallPool(MtrPoolAddressClass& pa, size_t _size);
+    void MtrAllocLargePool(MtrPoolAddressClass& pa, size_t _size);
     /**
      *@brief: Extended memory pool
      *@param: type [0|1]
      */
-    u_char* MtrAllocblock(size_t _size, size_t type = 0);
+    void MtrAllocblock(MtrPoolAddressClass& pa, size_t _size, size_t type = 0);
 
+};
+/**
+ *@brief: container base class
+ */
+class MtrContainerBaseClass{
+public:
+    MtrPoolAddressClass pa;
+    u_char *start;
+    u_char *end;
+    size_t size;
+public:
+    explicit MtrContainerBaseClass(MtrPoolClass *pool, size_t _size);
+    ~MtrContainerBaseClass();
 };
 
 #endif
