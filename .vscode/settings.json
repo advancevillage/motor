@@ -78,6 +78,7 @@
         "string_view": "c",
         "numeric": "c",
         "spdlog_impl.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "mtr_pool.h": "c"
     }
 }

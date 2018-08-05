@@ -17,7 +17,7 @@ MtrBufferClass::~MtrBufferClass(){
     this->realsize = 0;
 }
 
-bool MtrBufferClass::MtrBufferIn(void *_src, size_t _size){
+bool MtrBufferClass::in(void *_src, size_t _size){
     if((this->size - this->realsize) < _size ){
         return false;
     }
@@ -27,7 +27,7 @@ bool MtrBufferClass::MtrBufferIn(void *_src, size_t _size){
     return true;
 }
 
-bool MtrBufferClass::MtrBufferIn(const void *_src, size_t _size){
+bool MtrBufferClass::in(const void *_src, size_t _size){
     if((this->size - this->realsize) < _size ){
         return false;
     }
@@ -35,4 +35,30 @@ bool MtrBufferClass::MtrBufferIn(const void *_src, size_t _size){
     this->last = this->last + _size;
     this->realsize += _size;
     return true;
+}
+
+bool MtrBufferClass::in(std::string _str){
+    return this->in(_str.data(), _str.length());
+}
+
+bool MtrBufferClass::operator<<(std::string _str){
+    return this->in(_str.data(), _str.length());
+}
+
+bool MtrBufferClass::out(std::string file){
+    std::ofstream fs;
+    fs.open(file, std::ofstream::out | std::ofstream::app);
+    fs.write((char*)this->pos,this->realsize);
+    fs.close();
+    return true;
+}
+
+bool MtrBufferClass::operator>> (std::string file){
+    return this->out(file);
+}
+
+void MtrBufferClass::reset(){
+    std::memset(this->pos, 0, this->realsize);
+    this->last = this->pos;
+    this->realsize = 0;
 }

@@ -1,5 +1,6 @@
 Makefile
 objs/*
 html/*
+log/*
 src/core/mtr_auto_headers.h
 test/*

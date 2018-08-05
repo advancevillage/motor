@@ -20,7 +20,12 @@ public:
     ~MtrBufferClass();
     
 public:
-    bool MtrBufferIn(void *_src, size_t _size);
-    bool MtrBufferIn(const void *_src, size_t _size);
+    bool in(void *_src, size_t _size);
+    bool in(const void *_src, size_t _size);
+    bool in(std::string _str);
+    bool operator << (std::string _str);
+    bool operator >> (std::string _str);
+    bool out(std::string file);
+    void reset();
 };
 #endif

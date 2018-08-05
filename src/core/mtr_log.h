@@ -26,7 +26,7 @@ protected:
     std::string filedir;
     std::string errlog;
     std::string mtrlog;
-
+    
 public:
     explicit LogProcessor(MtrLogLevelEnum _level = MtrLogLevelEnum::MTR_LOG_INFO, std::string _filedir = "log/", std::string _errlog = "error.log", std::string _mtrlog = "motor.log");
     ~LogProcessor();
@@ -36,6 +36,7 @@ public:
     std::string GetLogDir() const;
     std::string GetErrLogFileName() const;
     std::string GetMtrLogFileName() const;
+    
 };
 
 #endif

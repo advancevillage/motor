@@ -9,17 +9,13 @@ int main(){
     LogProcessor *log = new LogProcessor();
     size_t max = MTR_PAGESIZE;
     MtrPoolClass *pool = new MtrPoolClass(log, max);
-    char kelly[] = "kelly, I love you forever!";
-    char richard[] = "richard, I am a ...";
-    MtrBufferClass *buf = new MtrBufferClass(pool, 1024);
-    MtrBufferClass *buf01 = new MtrBufferClass(pool, 2*1024);
-    MtrBufferClass *buf02 = new MtrBufferClass(pool, 5*1024);
-    std::string test = "你是我的最爱";
-    std::string test02 = fmt::format("{} love {}", "richard", "kelly");
-    buf->MtrBufferIn(kelly, std::strlen(kelly));
-    buf->MtrBufferIn(richard, std::strlen(richard));
-    buf->MtrBufferIn(test.data(), test.length());
-    buf->MtrBufferIn(test02.data(), test02.length());
-    fmt::print("Richard: {}\n", std::string(kelly));
+    MtrBufferClass buf(pool, 1024);
+    std::string  file = "log/motor.log";
+    std::time_t t = std::time(nullptr);
+    // Prints "The date is 2016-04-29." (with the current date)
+    std::string  str = fmt::format("[{:%Y-%m-%d %H:%M:%S %z}] {} love {}\n", *std::localtime(&t), "richard", "kelly");
+    buf << str;
+    buf >> file;
+    buf.reset();
     return MTR_OK;
 }
