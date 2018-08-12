@@ -4,61 +4,61 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-MtrBufferClass::MtrBufferClass(MtrPoolClass *pool, size_t _size)
-    :MtrContainerBaseClass(pool, _size), pos(NULL),last(NULL),realsize(0)
+BufferClass::BufferClass(PoolClass& g_o_p, size_t l_n_size)
+    :ContainerBaseClass(g_o_p, l_n_size), m_puch_pos(NULL),m_puch_last(NULL),m_n_len(0)
 {
-    this->pos = this->start;
-    this->last = this->start;
+    this->m_puch_pos = this->m_puch_start;
+    this->m_puch_last = this->m_puch_start;
 }
 
-MtrBufferClass::~MtrBufferClass(){
-    this->pos = NULL;
-    this->last = NULL;
-    this->realsize = 0;
+BufferClass::~BufferClass(){
+    this->m_puch_pos = NULL;
+    this->m_puch_last = NULL;
+    this->m_n_len = 0;
 }
 
-bool MtrBufferClass::in(void *_src, size_t _size){
-    if((this->size - this->realsize) < _size ){
+bool BufferClass::in(void* l_p_src, size_t l_n_size){
+    if((this->m_n_size - this->m_n_len) < l_n_size ){
         return false;
     }
-    std::memcpy(this->last, _src, _size);
-    this->last = this->last + _size;
-    this->realsize += _size;
+    std::memcpy(this->m_puch_last, l_p_src, l_n_size);
+    this->m_puch_last = this->m_puch_last + l_n_size;
+    this->m_n_len += l_n_size;
     return true;
 }
 
-bool MtrBufferClass::in(const void *_src, size_t _size){
-    if((this->size - this->realsize) < _size ){
+bool BufferClass::in(const void* l_p_src, size_t l_n_size){
+    if((this->m_n_size - this->m_n_len) < l_n_size ){
         return false;
     }
-    std::memcpy(this->last, _src, _size);
-    this->last = this->last + _size;
-    this->realsize += _size;
+    std::memcpy(this->m_puch_last, l_p_src, l_n_size);
+    this->m_puch_last = this->m_puch_last + l_n_size;
+    this->m_n_len += l_n_size;
     return true;
 }
 
-bool MtrBufferClass::in(std::string _str){
-    return this->in(_str.data(), _str.length());
+bool BufferClass::in(std::string l_str_msg){
+    return this->in(l_str_msg.data(), l_str_msg.length());
 }
 
-bool MtrBufferClass::operator<<(std::string _str){
-    return this->in(_str.data(), _str.length());
+bool BufferClass::operator<<(std::string l_str_msg){
+    return this->in(l_str_msg.data(), l_str_msg.length());
 }
 
-bool MtrBufferClass::out(std::string file){
-    std::ofstream fs;
-    fs.open(file, std::ofstream::out | std::ofstream::app);
-    fs.write((char*)this->pos,this->realsize);
-    fs.close();
+bool BufferClass::out(std::string l_str_file){
+    std::ofstream l_o_fs;
+    l_o_fs.open(l_str_file, std::ofstream::out | std::ofstream::app);
+    l_o_fs.write((char*)this->m_puch_pos,this->m_n_len);
+    l_o_fs.close();
     return true;
 }
 
-bool MtrBufferClass::operator>> (std::string file){
-    return this->out(file);
+bool BufferClass::operator>> (std::string l_str_file){
+    return this->out(l_str_file);
 }
 
-void MtrBufferClass::reset(){
-    std::memset(this->pos, 0, this->realsize);
-    this->last = this->pos;
-    this->realsize = 0;
+void BufferClass::reset(){
+    std::memset(this->m_puch_pos, 0, this->m_n_len);
+    this->m_puch_last = this->m_puch_pos;
+    this->m_n_len = 0;
 }

@@ -38,6 +38,7 @@
     * 普通局部变量       l_
   * 类型
     * char        ch
+    * u_char      uch
     * char[]      sz
     * string      str
     * bool        b
@@ -48,12 +49,15 @@
     * byte        by
     * function    fn
     * pointer     p
+    * object      o
   * 变量描述  
 * 类|结构体|枚举
   * 类名 每个单词的首字大写 不包含下划线 eg: PoolBaseClass
   * 构造函数前 + explicit
   * 复制构造函数
   * 重载=
+* 类引用命名规则
+  * 取类的缩写  eg: PoolBaseClass  pb
 
 ## g++ 编译选项
 

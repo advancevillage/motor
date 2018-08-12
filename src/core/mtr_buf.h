@@ -7,25 +7,25 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-class MtrBufferClass : public MtrContainerBaseClass {
+class BufferClass : public ContainerBaseClass {
 public:
-    u_char      *pos;
-    u_char      *last;
+    u_char* m_puch_pos;
+    u_char* m_puch_last;
 
 protected:
-    size_t      realsize;
+    size_t  m_n_len;
 
 public:
-    explicit MtrBufferClass(MtrPoolClass *pool, size_t _size);
-    ~MtrBufferClass();
+    explicit BufferClass(PoolClass& g_o_p, size_t l_n_size);
+    ~BufferClass();
     
 public:
-    bool in(void *_src, size_t _size);
-    bool in(const void *_src, size_t _size);
-    bool in(std::string _str);
-    bool operator << (std::string _str);
-    bool operator >> (std::string _str);
-    bool out(std::string file);
+    bool in(void* l_p_src, size_t l_n_size);
+    bool in(const void* l_p_src, size_t l_n_size);
+    bool in(std::string l_str_msg);
+    bool operator << (std::string l_str_msg);
+    bool operator >> (std::string l_str_msg);
+    bool out(std::string l_str_file);
     void reset();
 };
 #endif

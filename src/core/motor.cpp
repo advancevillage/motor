@@ -6,16 +6,9 @@
 #include <motor.h>
 
 int main(){
-    LogProcessor *log = new LogProcessor();
     size_t max = MTR_PAGESIZE;
-    MtrPoolClass *pool = new MtrPoolClass(log, max);
-    MtrBufferClass buf(pool, 1024);
-    std::string  file = "log/motor.log";
-    std::time_t t = std::time(nullptr);
-    // Prints "The date is 2016-04-29." (with the current date)
-    std::string  str = fmt::format("[{:%Y-%m-%d %H:%M:%S %z}] {} love {}\n", *std::localtime(&t), "richard", "kelly");
-    buf << str;
-    buf >> file;
-    buf.reset();
+    std::string l_str_fp = "log/";
+    std::string l_str_fn = "error.log";
+    PoolClass* g_po_p = new PoolClass(l_str_fp,l_str_fn);
     return MTR_OK;
 }

@@ -14,8 +14,7 @@
 #include <fmt/format.h>
 #include <fmt/time.h>
 
-#include <mtr_log.h>
-#include <mtr_pool.h>
+#include <mtr_mem.h>
 #include <mtr_buf.h>
 
 #endif
