@@ -7,4 +7,4 @@ MTR_GCC_VER=`$CPP -v 2>&1 | grep 'gcc version' 2>&1 \
 
 echo " + g++ version: $MTR_GCC_VER"
 
-CFLAGS="-std=c++11 -O0 -g -fPIC -lfmt"
+CFLAGS="-std=c++11 -O0 -g -fPIC -lfmt -lpthread"

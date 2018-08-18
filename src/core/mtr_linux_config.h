@@ -7,6 +7,8 @@
 
 //C++ STD Header
 #include <iostream>
+#include <thread>
+#include <functional>
 #include <string>
 #include <fstream>
 

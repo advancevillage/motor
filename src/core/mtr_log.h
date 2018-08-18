@@ -8,35 +8,37 @@
 #include <mtr_config.h>
 #include <mtr_core.h>
 
-typedef enum {
-    MTR_LOG_STDERR = 0,
-    MTR_LOG_EMERG  = 1,
-    MTR_LOG_ALERT  = 2,
-    MTR_LOG_CRIT   = 3,
-    MTR_LOG_ERR    = 4,
-    MTR_LOG_WARN   = 5,
-    MTR_LOG_NOTICE = 6,
-    MTR_LOG_INFO   = 7,
-    MTR_LOG_DEBUG  = 8
-}MtrLogLevelEnum;
-
-class LogProcessor {
+class LogClass {
 protected:
-    MtrLogLevelEnum  level;
-    std::string filedir;
-    std::string errlog;
-    std::string mtrlog;
-    
-public:
-    explicit LogProcessor(MtrLogLevelEnum _level = MtrLogLevelEnum::MTR_LOG_INFO, std::string _filedir = "log/", std::string _errlog = "error.log", std::string _mtrlog = "motor.log");
-    ~LogProcessor();
-public:
-    MtrLogLevelEnum GetLogLevel() const;
-    void SetLogLevel(MtrLogLevelEnum _level = MtrLogLevelEnum::MTR_LOG_INFO);
-    std::string GetLogDir() const;
-    std::string GetErrLogFileName() const;
-    std::string GetMtrLogFileName() const;
-    
-};
+    std::string m_str_fp;
+    std::string m_str_fn;
 
+private:
+    std::thread m_th_out;
+
+public:
+    explicit LogClass(std::string l_str_fp = "log/", std::string l_str_fn = "motor.log");
+    LogClass(const LogClass& g_o_log);
+    virtual ~LogClass();
+
+
+public:
+    LogClass& operator= (const LogClass& g_o_log);
+    //LogClass& operator<< (std::string l_str_msg);
+    LogClass& operator>> (std::string l_str_msg);
+    LogClass& in(std::string l_str_msg);
+    LogClass& out(std::string l_str_msg);
+
+    LogClass& error(std::string l_str_msg);
+    LogClass& info(std::string l_str_msg);
+    LogClass& debug(std::string l_str_msg);
+
+    void SetFileName(std::string l_str_fn);
+    std::string GetFileName() const;
+
+    void SetFilePath(std::string l_str_fp);
+    std::string GetFilePath() const;
+
+    void persist();
+};
 #endif

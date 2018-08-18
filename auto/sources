@@ -7,7 +7,9 @@ CORE_MODULES="mtr_core_module"
 CORE_INCS="src/core"
 
 CORE_DEPS="src/core/motor.h \
-		   src/core/mtr_mem.h"
+		   src/core/mtr_mem.h \
+		   src/core/mtr_log.h"
 
 CORE_SRCS="src/core/motor.cpp \
-		   src/core/mtr_mem.cpp"
+		   src/core/mtr_mem.cpp \
+		   src/core/mtr_log.cpp"
