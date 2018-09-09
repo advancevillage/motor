@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
 # LC_ALL=C 是为了去除所有本地化的设置，让命令能正确执行
 export LC_ALL=C
-export PROJECT=motor
-export VERSION=0.0.1
+export PROJECT=kr
+export VERSION=0.0.0
 
 . auto/options
 . auto/init

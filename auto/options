@@ -1,19 +1,11 @@
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
-MTR_PREFIX=
-MTR_SBIN_PATH=
-MTR_CONF_PATH=
-MTR_PID_PATH=
-MTR_LOG_PATH=
-MTR_PLATFORM=
+PREFIX=
+OBJS=objs
 
-CPP=${CC:-c++}
-MTR_OBJS=objs
+CC=${CC:-cc}
 
-MTR_SBIN_PATH=${MTR_SBIN_PATH:-sbin/nginx}
-MTR_CONF_PATH=${MTR_CONF_PATH:-conf/mator.conf}
-MTR_PID_PATH=${MTR_PID_PATH:-log/mator.pid}
-MTR_LOG_PATH=${MTR_LOG_PATH:-log/}
+
 
 

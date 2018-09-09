@@ -1,12 +1,16 @@
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
-MTR_MAKEFILE=$MTR_OBJS/Makefile
+MAKEFILE=$OBJS/Makefile
 
-MTR_AUTO_HEADERS_H=$MTR_OBJS/mtr_auto_headers.h
+AUTO_HEADERS_H=$OBJS/${PROJECT}_auto_headers.h
 
-#Motor Symbol
-MTR_TAB="	"
+#Symbol
+TAB="	"
+SPACE=" "
+
+#TO DO
+
 MTR_REGEX_DIRESEP="\/"
 #Makefile \n must use ''
 MTR_SED_NEWLINE=' \\\
