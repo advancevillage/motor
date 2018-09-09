@@ -84,7 +84,7 @@ std::string LogClass::GetFileName() const {
 void LogClass::persist(){
     int i = 1;
     while(i < 100){
-        std::cout << fmt::format("{} The thread is", i) << std::endl;
+        std::cout << fmt::format("{0} The thread is {0}", i) << std::endl;
         ++i;
     }
 }
