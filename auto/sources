@@ -1,15 +1,9 @@
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
 #core module
-CORE_MODULES="mtr_core_module"
-
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/motor.h \
-		   src/core/mtr_mem.h \
-		   src/core/mtr_log.h"
+CORE_DEPS="src/core/kr.h"
 
-CORE_SRCS="src/core/motor.cpp \
-		   src/core/mtr_mem.cpp \
-		   src/core/mtr_log.cpp"
+CORE_SRCS="src/core/kr.c"

@@ -1,0 +1,10 @@
+
+# Copyright (C) kelly & richard
+
+cat << END >> $AUTO_CONFIG_H
+
+#ifndef $have
+#define $have  $value
+#endif
+
+END

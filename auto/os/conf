@@ -1,9 +1,9 @@
 
 # Copyright (C) Richard Sun
 
-echo "checking for $MTR_SYSTEM"
+echo "checking for $SYSTEM specific features"
 
-case "$MTR_PLATFORM" in
+case "$PLATFORM" in
 
     Linux:*)
         . auto/os/linux
@@ -11,7 +11,7 @@ case "$MTR_PLATFORM" in
 
     *)
         echo
-        echo $0: error: MOTOR only support Linux
+        echo $0: error: only support Linux
         echo
         exit 1
     ;;

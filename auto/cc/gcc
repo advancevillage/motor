@@ -1,0 +1,9 @@
+
+# Copyright (C) kelly & richard
+
+GCC_VER=`$CC -v 2>&1 | grep 'gcc version' 2>&1 \
+                         | sed -e 's/^.* version \(.*\) /\1/'`
+
+echo " + gcc version: $GCC_VER"
+
+CFLAGS="-std=c++11 -O0 -g -fPIC -lfmt -lpthread"

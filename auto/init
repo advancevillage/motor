@@ -4,45 +4,33 @@
 MAKEFILE=$OBJS/Makefile
 
 AUTO_HEADERS_H=$OBJS/${PROJECT}_auto_headers.h
+AUTO_CONFIG_H=$OBJS/${PROJECT}_auto_config.h
+AUTOCONF_ERR=$OBJS/autoconf.err
+AUTOTEST=$OBJS/autotest
 
 #Symbol
 TAB="	"
 SPACE=" "
 
-#TO DO
-
-MTR_REGEX_DIRESEP="\/"
-#Makefile \n must use ''
-MTR_SED_NEWLINE=' \\\
-	'
-MTR_SHELL_NEWLINE=' \
-	'
-MTR_SPACE_NEWLINE='
-	'
-MTR_SPACE=' '
-# /
-MTR_DIRSEP='/'
-
-#Check the echo's "-n" option and "\c" capability
+# check the echo's "-n" option and "\c" capability
 if echo "test\c" | grep c >/dev/null; then
-	if echo -n test | grep n >/dev/null; then
-		MTR_ECHO_N=
-		MTR_ECHO_C=
-	else
-		MTR_ECHO_N="-n"
-		MTR_ECHO_C=
-	fi
+    if echo -n test | grep n >/dev/null; then
+        echo_n=
+        echo_c=
+    else
+        echo_n=-n
+        echo_c=
+    fi
 else
-	MTR_ECHO_N=
-	MTR_ECHO_C="\c"
+    echo_n=
+    echo_c='\c'
 fi
 
 #create Makefile
-
 cat << EOF > Makefile
 
 default: build
 
 clean:
-${MTR_TAB}rm -rf Makefile $MTR_OBJS
+${TAB}rm -rf Makefile $OBJS
 EOF

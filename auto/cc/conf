@@ -1,26 +1,24 @@
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
-
-LINK="\$(CPP)"
-
-MTR_INCLUDE_OPT="-I "
-MTR_COMPILE_OPT="-c "
-MTR_OBJOUT="-o "
-MTR_BINOUT="-o "
-MTR_OBJEXT="o"
-MTR_INCEXT="h"
-MTR_BINEXT=""
+#compile options
+INCLUDE_OPT="-I "
+COMPILE_OPT="-c "
+OBJOUT="-o "
+BINOUT="-o "
+OBJEXT=".o"
+LIBEXT=".so"
+BINEXT=""
 
 . auto/cc/name
 
-case $MTR_CPP_NAME in
-    g++)
-        . auto/cc/g++
+case $CC_NAME in
+    gcc)
+        . auto/cc/gcc
     ;;
     unknown)
         echo
-        echo $0: error: C compiler $CPP is not found
+        echo $0: error: C compiler $C is not found
         echo
         exit 1
     ;;

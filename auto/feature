@@ -1,0 +1,109 @@
+
+# Copyright (C) kelly & richard
+
+echo $echo_n "checking for $feature ...$echo_c"
+
+cat << END >> $AUTOCONF_ERR
+
+----------------------------------------
+checking for $feature
+
+END
+
+found=no
+
+if test -n "$feature_name"; then
+    have_feature=`echo $feature_name | tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+fi
+
+if test -n "$feature_path"; then
+    for temp in $feature_path; do
+        feature_inc_path="$feature_inc_path -I $temp"
+    done
+fi
+
+cat << END > $AUTOTEST.c
+
+#include <sys/types.h>
+$INCLUDE_UNISTD_H
+$feature_incs
+
+int main(void) {
+    $feature_test;
+    return 0;
+}
+
+END
+
+
+test="$CC $CC_TEST_FLAGS $CC_AUX_FLAGS $feature_inc_path \
+          -o $AUTOTEST $AUTOTEST.c $TEST_LD_OPT $feature_libs"
+
+feature_inc_path=
+
+eval "/bin/sh -c \"$test\" >> $AUTOCONF_ERR 2>&1"
+
+if [ -x $AUTOTEST ]; then
+    case "$ngx_feature_run" in
+        yes)
+            if /bin/sh -c $AUTOTEST >> $AUTOCONF_ERR 2>&1; then
+                echo " found"
+                found=yes
+                if test -n "$feature_name"; then
+                    have=$have_feature . auto/have
+                fi
+            else
+                echo " found but is not working"
+            fi
+        ;;
+
+        value)
+            # /bin/sh is used to intercept "Killed" or "Abort trap" messages
+            if /bin/sh -c $AUTOTEST >> $AUTOCONF_ERR 2>&1; then
+                echo " found"
+                found=yes
+                cat << END >> $AUTO_CONFIG_H
+
+#ifndef $feature_name
+#define $feature_name  `$AUTOTEST`
+#endif
+
+END
+            else
+                echo " found but is not working"
+            fi
+        ;;
+
+        bug)
+            # /bin/sh is used to intercept "Killed" or "Abort trap" messages
+            if /bin/sh -c $AUTOTEST >> $AUTOCONF_ERR 2>&1; then
+                echo " not found"
+            else
+                echo " found"
+                found=yes
+
+                if test -n "$feature_name"; then
+                    have=$have_feature . auto/have
+                fi
+            fi
+        ;;
+
+        *)
+            echo " found"
+            found=yes
+
+            if test -n "$feature_name"; then
+                have=$have_feature . auto/have
+            fi
+        ;;
+    esac
+else
+    echo " not found"
+    echo "----------"    >> $AUTOCONF_ERR
+    cat $AUTOTEST.c      >> $AUTOCONF_ERR
+    echo "----------"    >> $AUTOCONF_ERR
+    echo $test           >> $AUTOCONF_ERR
+    echo "----------"    >> $AUTOCONF_ERR
+fi
+
+rm -rf $AUTOTEST*

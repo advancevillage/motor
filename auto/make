@@ -1,10 +1,11 @@
 
-# Copyright (C) Richard Sun
+# Copyright (C) kelly & richard
 
-echo "creating $MTR_MAKEFILE"
+echo "creating $MAKEFILE"
 
-mkdir -p $MTR_OBJS/src/core
+mkdir -p $OBJS/src/core
 
+//TO DO TOMORROW
 mtr_objs_dir=$MTR_OBJS$MTR_REGEX_DIRESEP
 
 cat << END > $MTR_MAKEFILE

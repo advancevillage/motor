@@ -4,6 +4,9 @@
 PREFIX=
 OBJS=objs
 
+#checkout env
+PLATFORM=
+
 CC=${CC:-cc}
 
 

@@ -11,27 +11,28 @@ export VERSION=0.0.0
 . auto/init
 . auto/sources
 
-test -d $MTR_OBJS || mkdir -p $MTR_OBJS
+test -d $OBJS || mkdir -p $OBJS
 
-echo > $MTR_AUTO_HEADERS_H
+echo > $AUTO_HEADERS_H
+echo > $AUTOCONF_ERR
 
-if test -z "$MTR_PLATFORM"; then
+if test -z "$PLATFORM"; then
     echo "checking for OS"
 
 	#System Linux
-    MTR_SYSTEM=`uname -s 2>/dev/null`
+    SYSTEM=`uname -s 2>/dev/null`
 	#version
-    MTR_RELEASE=`uname -r 2>/dev/null`
+    RELEASE=`uname -r 2>/dev/null`
 	#x86 x86_64
-    MTR_MACHINE=`uname -m 2>/dev/null`
+    ARCH=`uname -m 2>/dev/null`
 
-    echo " + $MTR_SYSTEM $MTR_RELEASE $MTR_MACHINE"
+    echo " + $SYSTEM $RELEASE $ARCH"
 
-    MTR_PLATFORM="$MTR_SYSTEM:$MTR_RELEASE:$MTR_MACHINE";
+    PLATFORM="$SYSTEM:$RELEASE:$ARCH";
 
 else
-    echo "building for $MTR_PLATFORM"
-    MTR_SYSTEM=$MTR_PLATFORM
+    echo "building for $PLATFORM"
+    SYSTEM=$PLATFORM
 fi
 
 . auto/cc/conf
