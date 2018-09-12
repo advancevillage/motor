@@ -5,23 +5,19 @@ echo "creating $MAKEFILE"
 
 mkdir -p $OBJS/src/core
 
-//TO DO TOMORROW
-mtr_objs_dir=$MTR_OBJS$MTR_REGEX_DIRESEP
-
-cat << END > $MTR_MAKEFILE
+cat << END > $MAKEFILE
 
 CFLAGS = $CFLAGS
-CPP = $CPP
-LINK = $LINK
+CC = $CC
 
 END
 
 #core module
-mtr_core_deps=`echo $CORE_DEPS \
-    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
-
-mtr_core_incs=`echo $CORE_INCS $MTR_OBJS \
+core_incs=`echo $CORE_INCS $OBJS \
     |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
+
+core_deps=`echo $CORE_DEPS \
+    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
 
 cat << END >> $MTR_MAKEFILE
 CORE_DEPS = $mtr_core_deps

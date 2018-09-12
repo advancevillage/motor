@@ -4,6 +4,9 @@
 #core module
 CORE_INCS="src/core"
 
-CORE_DEPS="src/core/kr.h"
+CORE_DEPS="src/core/${PROJECT}_config.h \
+           src/core/${PROJECT}_core.h \
+           src/core/${PROJECT}_string.h"
+            "
 
-CORE_SRCS="src/core/kr.c"
+CORE_SRCS="src/core/${PROJECT}_string.c"
