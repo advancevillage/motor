@@ -8,9 +8,8 @@ AUTO_CONFIG_H=$OBJS/${PROJECT}_auto_config.h
 AUTOCONF_ERR=$OBJS/autoconf.err
 AUTOTEST=$OBJS/autotest
 
-#Symbol
-TAB="	"
-SPACE=" "
+tab='	'
+space=' '
 
 # check the echo's "-n" option and "\c" capability
 if echo "test\c" | grep c >/dev/null; then
@@ -32,5 +31,5 @@ cat << EOF > Makefile
 default: build
 
 clean:
-${TAB}rm -rf Makefile $OBJS
+${tab}rm -rf Makefile $OBJS
 EOF

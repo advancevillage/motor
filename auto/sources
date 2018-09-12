@@ -6,7 +6,8 @@ CORE_INCS="src/core"
 
 CORE_DEPS="src/core/${PROJECT}_config.h \
            src/core/${PROJECT}_core.h \
-           src/core/${PROJECT}_string.h"
-            "
+           src/core/${PROJECT}_string.h \
+           src/core/${PROJECT}_log.h"
 
-CORE_SRCS="src/core/${PROJECT}_string.c"
+CORE_SRCS="src/core/${PROJECT}_string.c \
+           src/core/${PROJECT}_log.c"

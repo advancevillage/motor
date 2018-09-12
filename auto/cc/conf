@@ -2,13 +2,22 @@
 # Copyright (C) kelly & richard
 
 #compile options
-INCLUDE_OPT="-I "
-COMPILE_OPT="-c "
-OBJOUT="-o "
-BINOUT="-o "
-OBJEXT=".o"
-LIBEXT=".so"
-BINEXT=""
+include_opt="-I "
+complie_opt="-c "
+
+libout="-o "
+objout="-o "
+binout="-o "
+
+incext="h"
+objext="o"
+libext="so"
+binext=""
+
+sed_line=' \\\
+    '
+dirsep='/'
+regex_dirsep='\/'
 
 . auto/cc/name
 

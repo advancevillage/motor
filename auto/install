@@ -4,6 +4,6 @@
 cat << END >> Makefile
 
 build:
-${MTR_TAB}\$(MAKE) -f $MTR_MAKEFILE
+${tab}\$(MAKE) -f $MAKEFILE
 
 END

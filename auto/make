@@ -11,59 +11,49 @@ CFLAGS = $CFLAGS
 CC = $CC
 
 END
-
+set -x
 #core module
 core_incs=`echo $CORE_INCS $OBJS \
-    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}${MTR_INCLUDE_OPT}\1/g"` 
+    |  sed -e "s/  *\([^ ][^ ]*\)/${sed_line}${include_opt}\1/g"` 
 
-core_deps=`echo $CORE_DEPS \
-    |  sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
-
-cat << END >> $MTR_MAKEFILE
-CORE_DEPS = $mtr_core_deps
-
-CORE_INCS = ${MTR_INCLUDE_OPT}$mtr_core_incs
+cat << END >> $MAKEFILE
+CORE_INCS = ${include_opt}$core_incs
 
 END
 
-mtr_all_srcs="$CORE_SRCS"
-mtr_all_srcs=`echo $mtr_all_srcs | sed -e "s/\//$MTR_REGEX_DIRESEP/g"`
+all_srcs="$CORE_SRCS"
 
-mtr_all_objs=`echo $mtr_all_srcs \
-    |   sed -e "s#\([^ ]*\.\)cpp#$MTR_OBJS\/\1$MTR_OBJEXT#g" \
-            -e "s#\([^ ]*\.\)c#$MTR_OBJS\/\1$MTR_OBJEXT#g"` 
+all_libs=`echo $all_srcs \
+    |   sed -e "s#\([^ ]*\.\)cpp#$OBJS$regex_dirsep\1$libext#g" \
+            -e "s#\([^ ]*\.\)c#$OBJS$regex_dirsep\1$libext#g"`
 
-mtr_all_deps=`echo $mtr_all_objs \
-    |   sed -e "s/  *\([^ ][^ ]*\)/${MTR_SED_NEWLINE}\1/g"`
+all_libs=`echo $all_libs \
+        | sed -e "s/  *\([^ ][^ ]*\)/${sed_line}\1/g"`
 
-mtr_all_objs=`echo $mtr_all_objs \
-    |   sed -e "s/  *\([^ ][^ ]\)/${MTR_SED_NEWLINE}\1/g"`
-
-cat << END >> $MTR_MAKEFILE
+cat << END >> $MAKEFILE
 
 build: binary 
 
-binary: $MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}
+binary: $OBJS${dirsep}${PROJECT}${binext}
 
-$MTR_OBJS${MTR_DIRSEP}${PROJECT}${MTR_BINEXT}: $mtr_all_deps
-${MTR_TAB}\$(LINK) $mtr_all_objs${MTR_SHELL_NEWLINE}\$(CFLAGS)${MTR_SPACE}${MTR_BINOUT}${MTR_OBJS}${MTR_DIRSEP}${PROJECT} 
+$OBJS${dirsep}${PROJECT}${binext}: $all_libs
+$tab\$(CC)$space\$(CFLAGS)$space$all_libs$space$binout$OBJS$dirsep$PROJECT$binext 
 
 END
 
-mtr_cc="\$(CPP) $MTR_COMPILE_OPT \$(CFLAGS) \$(CORE_INCS)"
+cc="\$(CC) $complite_opt \$(CFLAGS) \$(CORE_INCS)"
 
-for mtr_src in $mtr_all_srcs; do
-	mtr_src=`echo $mtr_src | sed -e "s/\//$MTR_REGEX_DIRESEP/g"` 
-    mtr_obj=`echo $mtr_src \
-        |   sed -e "s#^\(.*\.\)cpp\\$#$mtr_objs_dir\1$MTR_OBJEXT#g" \
-                -e "s#^\(.*\.\)c\\$#$mtr_objs_dir\1$MTR_OBJEXT#g"`
-	mtr_inc=`echo $mtr_src \
-        |   sed -e "s#^\(.*\.\)cpp\\$#\1$MTR_INCEXT#g" \
-                -e "s#^\(.*\.\)c\\$#\1$MTR_INCEXT#g"`
+for src in $all_srcs; do
+    lib=`echo $src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#$OBJS$regex_dirsep\1$libext#g" \
+                -e "s#^\(.*\.\)c\\$#$OBJS$regex_dirsep\1$libext#g"`
+	inc=`echo $src \
+        |   sed -e "s#^\(.*\.\)cpp\\$#\1$incext#g" \
+                -e "s#^\(.*\.\)c\\$#\1$incext#g"`
 
-    cat << END >> $MTR_MAKEFILE
-$mtr_obj:  $mtr_inc${MTR_SPACE}$mtr_src
-${MTR_TAB}$mtr_cc${MTR_SPACE}$mtr_src${MTR_SPACE}${MTR_OBJOUT}$mtr_obj
+    cat << END >> $MAKEFILE
+$lib:  $inc$space$src
+$tab$cc$space$src$space$libout$lib
 
 END
 done
